@@ -1,11 +1,15 @@
 {
   "private": true,
   "scripts": {
-    "prepare": "lerna run prepare",
-    "rebuild:browser": "theia rebuild:browser"
+    "prepare": "yarn tslint && lerna run prepare",
+    "rebuild:browser": "theia rebuild:browser",
+    "tslint-fix": "tslint --fix --project theia-dashboard-extension",
+    "tslint": "tslint --project theia-dashboard-extension"
   },
+  "license": "EPL-2.0",
   "devDependencies": {
     "typescript": "2.7.2",
+    "tslint": "5.10.0",
     "lerna": "2.4.0"
   },
   "workspaces": [
