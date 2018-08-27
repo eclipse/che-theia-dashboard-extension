@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "prepare": "lerna run prepare",
+    "rebuild:browser": "theia rebuild:browser"
+  },
+  "devDependencies": {
+    "typescript": "2.7.2",
+    "lerna": "2.4.0"
+  },
+  "workspaces": [
+    "theia-dashboard-extension",
+    "browser-app"
+  ]
+}
