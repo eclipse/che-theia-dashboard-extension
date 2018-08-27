@@ -8,7 +8,6 @@
   },
   "license": "EPL-2.0",
   "devDependencies": {
-    "typescript": "2.7.2",
     "tslint": "5.10.0",
     "lerna": "2.4.0"
   },
