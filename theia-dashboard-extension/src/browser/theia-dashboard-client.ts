@@ -13,7 +13,7 @@ import {FrontendApplicationContribution, FrontendApplication} from '@theia/core/
 import {EnvVariablesServer, EnvVariable} from '@theia/core/lib/common/env-variables';
 import {FrontendApplicationStateService} from '@theia/core/lib/browser/frontend-application-state';
 import {CheWorkspaceClientService} from './che-workspace-client-service';
-import {IWorkspace} from '@eclipse-che/workspace-client';
+import { che } from '@eclipse-che/api';
 import '../../src/browser/style/che-theia-dashboard-module.css';
 
 const THEIA_ICON_ID = 'theia:icon';
@@ -86,7 +86,7 @@ export class TheiaDashboardClient implements FrontendApplicationContribution {
         const workspaceId = workspaceIdEnvVar.value;
 
         const remoteApi = await this.cheWorkspaceClient.restClient();
-        const workspace: IWorkspace = await remoteApi.getById<IWorkspace>(workspaceId);
+        const workspace: che.workspace.Workspace = await remoteApi.getById<che.workspace.Workspace>(workspaceId);
 
         if (!workspace || !workspace.links || !workspace.links.ide) {
             return undefined;

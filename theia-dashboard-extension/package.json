@@ -10,7 +10,8 @@
   ],
   "dependencies": {
     "@eclipse-che/workspace-client": "latest",
-    "@theia/core": "0.3.13"
+    "@eclipse-che/api": "latest",
+    "@theia/core": "0.3.17"
   },
   "devDependencies": {
     "rimraf": "2.6.2",
