@@ -3,23 +3,23 @@
   "name": "browser-app",
   "version": "0.0.1",
   "dependencies": {
-    "@theia/core": "0.3.17",
-    "@theia/filesystem": "0.3.17",
-    "@theia/workspace": "0.3.17",
-    "@theia/preferences": "0.3.17",
-    "@theia/navigator": "0.3.17",
-    "@theia/process": "0.3.17",
-    "@theia/terminal": "0.3.17",
-    "@theia/editor": "0.3.17",
-    "@theia/languages": "0.3.17",
-    "@theia/markers": "0.3.17",
-    "@theia/monaco": "0.3.17",
-    "@theia/typescript": "0.3.17",
-    "@theia/messages": "0.3.17",
+    "@theia/core": "0.3.19",
+    "@theia/filesystem": "0.3.19",
+    "@theia/workspace": "0.3.19",
+    "@theia/preferences": "0.3.19",
+    "@theia/navigator": "0.3.19",
+    "@theia/process": "0.3.19",
+    "@theia/terminal": "0.3.19",
+    "@theia/editor": "0.3.19",
+    "@theia/languages": "0.3.19",
+    "@theia/markers": "0.3.19",
+    "@theia/monaco": "0.3.19",
+    "@theia/typescript": "0.3.19",
+    "@theia/messages": "0.3.19",
     "@eclipse-che/theia-dashboard-extension": "0.0.1"
   },
   "devDependencies": {
-    "@theia/cli": "0.3.17"
+    "@theia/cli": "0.3.19"
   },
   "scripts": {
     "prepare": "theia build --mode development",
