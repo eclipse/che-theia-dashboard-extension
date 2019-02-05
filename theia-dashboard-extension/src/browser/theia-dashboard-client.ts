@@ -1,5 +1,5 @@
 /*********************************************************************
- * Copyright (c) 2018 Red Hat, Inc.
+ * Copyright (c) 2019 Red Hat, Inc.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,8 +12,6 @@ import {injectable, inject} from 'inversify';
 import {FrontendApplicationContribution, FrontendApplication} from '@theia/core/lib/browser';
 import {EnvVariablesServer, EnvVariable} from '@theia/core/lib/common/env-variables';
 import {FrontendApplicationStateService} from '@theia/core/lib/browser/frontend-application-state';
-import {CheWorkspaceClientService} from './che-workspace-client-service';
-import { che } from '@eclipse-che/api';
 import '../../src/browser/style/che-theia-dashboard-module.css';
 
 const THEIA_ICON_ID = 'theia:icon';
@@ -23,11 +21,9 @@ const THEIA_ICON_ID = 'theia:icon';
  */
 @injectable()
 export class TheiaDashboardClient implements FrontendApplicationContribution {
-
     private isExpanded: boolean = false;
 
     constructor(@inject(EnvVariablesServer) private readonly envVariablesServer: EnvVariablesServer,
-                @inject(CheWorkspaceClientService) private readonly cheWorkspaceClient: CheWorkspaceClientService,
                 @inject(FrontendApplicationStateService) protected readonly frontendApplicationStateService: FrontendApplicationStateService) {
         this.frontendApplicationStateService.reachedState('ready').then(() => this.onReady());
     }
@@ -76,24 +72,31 @@ export class TheiaDashboardClient implements FrontendApplicationContribution {
         if (!envVariables) {
             return undefined;
         }
-        const workspaceIdEnvVar = envVariables.find((envVariable) => {
-            return envVariable.name === 'CHE_WORKSPACE_ID';
+        let ideWorkspaceUrl: string | undefined;
+        let apiExternal: string | undefined;
+        let namespace: string | undefined;
+        let workspaceName: string | undefined;
+        envVariables.forEach((envVariable) => {
+            if (envVariable.name === 'CHE_API_EXTERNAL') {
+                if (!envVariable.value) {
+                    return;
+                }
+                const match = envVariable.value.match(/^(https?:\/\/[^/]*)/i);
+                if (match && match[1]) {
+                    apiExternal = match[1];
+                }
+            } else if (envVariable.name === 'CHE_WORKSPACE_NAMESPACE') {
+                namespace =  envVariable.value;
+            } else if (envVariable.name === 'CHE_WORKSPACE_NAME') {
+                workspaceName =  envVariable.value;
+            }
+            if (apiExternal && namespace && workspaceName) {
+                ideWorkspaceUrl = `${apiExternal}/dashboard/#/${namespace}/${workspaceName}`;
+                return;
+            }
         });
-        if (!workspaceIdEnvVar || !workspaceIdEnvVar.value) {
-            return undefined;
-        }
 
-        const workspaceId = workspaceIdEnvVar.value;
-
-        const remoteApi = await this.cheWorkspaceClient.restClient();
-        const workspace: che.workspace.Workspace = await remoteApi.getById<che.workspace.Workspace>(workspaceId);
-
-        if (!workspace || !workspace.links || !workspace.links.ide) {
-            return undefined;
-        }
-        const ideWorkspaceUrl = workspace!.links!.ide!;
-
-        return ideWorkspaceUrl.replace('/che/', '/dashboard/#/ide/che/');
+        return ideWorkspaceUrl;
     }
 
 }
