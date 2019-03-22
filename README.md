@@ -1,3 +1,5 @@
+> # This repository deprecated, all code moved [there](https://github.com/eclipse/che-theia/tree/master/extensions/eclipse-che-theia-dashboard)
+
 # Che Theia dashboard
 This Theia extension is performing additional actions as show/hide Che dashboard navbar or redirects into Eclipse Che in the case when the Theia was opened as a direct link.
 
